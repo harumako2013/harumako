@@ -1,4 +1,14 @@
 // -------------------------
+// バージョン管理
+// -------------------------
+let version = parseFloat(localStorage.getItem("diaryVersion") || "0.0");
+version = Math.round((version + 0.1) * 10) / 10; // 0.1 ずつ上げる
+localStorage.setItem("diaryVersion", version);
+
+document.getElementById("versionDisplay").textContent = "Version: " + version;
+
+
+// -------------------------
 // パスワード設定（初回のみ）
 // -------------------------
 let diaryPassword = localStorage.getItem("diaryPassword");
@@ -13,10 +23,12 @@ if (!diaryPassword) {
   }
 }
 
+
 // -------------------------
 // 日記データ読み込み
 // -------------------------
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+
 
 // -------------------------
 // 日記一覧表示
@@ -40,6 +52,7 @@ function renderDiaries() {
   });
 }
 
+
 // -------------------------
 // 日記削除（パスワード必須）
 // -------------------------
@@ -56,12 +69,14 @@ function deleteDiary(index) {
   }
 }
 
+
 // -------------------------
 // 入力欄の表示切り替え
 // -------------------------
 document.getElementById("writeBtn").addEventListener("click", () => {
   document.getElementById("inputArea").classList.toggle("hidden");
 });
+
 
 // -------------------------
 // 保存ボタン
@@ -86,6 +101,7 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   }
 });
 
+
 // -------------------------
 // 日記保存処理
 // -------------------------
@@ -99,6 +115,7 @@ function saveDiary(text, date, image) {
 
   renderDiaries();
 }
+
 
 // -------------------------
 // 初期表示
