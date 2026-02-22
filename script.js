@@ -1,10 +1,7 @@
 // -------------------------
-// バージョン管理
+// バージョン番号（ここを更新のたびに上げる）
 // -------------------------
-let version = parseFloat(localStorage.getItem("diaryVersion") || "0.0");
-version = Math.round((version + 0.1) * 10) / 10; // 0.1 ずつ上げる
-localStorage.setItem("diaryVersion", version);
-
+const version = "0.1";  // ← プログラム更新したらここを 0.2 → 0.3 → 0.4 と上げる
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
