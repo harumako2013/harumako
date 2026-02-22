@@ -8,31 +8,40 @@ h1 {
   text-align: center;
 }
 
-button {
+nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+nav button {
   padding: 10px 20px;
-  background: #4CAF50;
+  background: #3498db;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #45a049;
+nav button:hover {
+  background: #2980b9;
 }
 
-#inputArea {
-  margin-top: 20px;
-}
-
-textarea {
-  width: 100%;
-  height: 100px;
-  margin-bottom: 10px;
+.page {
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
 }
 
 .hidden {
   display: none;
+}
+
+/* 日記のCSS（前のまま） */
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
 }
 
 .diary-item {
