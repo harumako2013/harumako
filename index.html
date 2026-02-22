@@ -2,14 +2,23 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>ハッカーサイト</title>
+  <title>日記サイト</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>ようこそ！</h1>
-  <p>ここに内容を書いていきます。</p>
-  <p>日記　暇だったｗ\^o^/</p>
-  <p>マグロとサーモンの正体は、埼玉県川越市在住の南古谷小学校6年6組の小学生</p>
-  <p>特定簡単だったな</p>
-  <p>照内</p>
+
+  <h1>日記サイト</h1>
+
+  <button id="writeBtn">日記を書く</button>
+
+  <div id="inputArea" class="hidden">
+    <textarea id="diaryText" placeholder="今日の出来事を書いてね"></textarea>
+    <button id="saveBtn">保存</button>
+  </div>
+
+  <h2>日記一覧</h2>
+  <div id="diaryList"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
