@@ -21,35 +21,41 @@
   <!-- プロフィールページ -->
   <div id="profilePage" class="page hidden">
     <h2>プロフィール</h2>
-    <p>ここに自己紹介を書けるよ。</p>
+    <p id="profileText"></p>
   </div>
 
-  <!-- 日記ページ -->
+  <!-- 日記ページ（閲覧のみ） -->
   <div id="diaryPage" class="page hidden">
-    <h2>日記</h2>
-
-    <button id="writeBtn">日記を書く</button>
-
-    <div id="inputArea" class="hidden">
-      <textarea id="diaryText" placeholder="今日の出来事を書いてね"></textarea>
-      <input type="file" id="imageInput" accept="image/*">
-      <button id="saveBtn">保存</button>
-    </div>
-
-    <h3>日記一覧</h3>
+    <h2>日記一覧</h2>
     <div id="diaryList"></div>
   </div>
 
   <!-- 投稿場ページ -->
   <div id="postPage" class="page hidden">
     <h2>投稿場</h2>
-    <p>ここに掲示板機能を追加できるよ。</p>
+
+    <textarea id="postInput" placeholder="投稿を書いてね"></textarea>
+    <button id="postBtn">投稿</button>
+
+    <h3>投稿一覧</h3>
+    <div id="postList"></div>
   </div>
 
   <!-- 管理者ページ -->
   <div id="adminPage" class="page hidden">
     <h2>管理者ページ</h2>
-    <p>ここに投稿場の管理機能を追加できるよ。</p>
+
+    <h3>プロフィール編集</h3>
+    <textarea id="profileEdit"></textarea>
+    <button id="saveProfileBtn">プロフィール保存</button>
+
+    <h3>日記を書く</h3>
+    <textarea id="diaryText"></textarea>
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="saveDiaryBtn">日記保存</button>
+
+    <h3>投稿場の管理</h3>
+    <p>投稿の削除ができます。</p>
   </div>
 
   <script src="script.js"></script>
