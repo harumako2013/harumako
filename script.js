@@ -1,3 +1,14 @@
+// パスワードを localStorage に保存（初回のみ）
+let diaryPassword = localStorage.getItem("diaryPassword");
+
+if (!diaryPassword) {
+  diaryPassword = prompt("日記のパスワードを設定してください");
+  if (diaryPassword && diaryPassword.trim() !== "") {
+    localStorage.setItem("diaryPassword", diaryPassword);
+  } else {
+    alert("パスワードが設定されていません。再読み込みして設定してください。");
+  }
+}
 // 日記データを localStorage から読み込む
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
