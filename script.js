@@ -1,3 +1,16 @@
+// パスワードを localStorage に保存（初回のみ）
+let diaryPassword = localStorage.getItem("diaryPassword");
+
+if (!diaryPassword) {
+  const newPass = prompt("日記のパスワードを設定してください");
+  if (newPass && newPass.trim() !== "") {
+    localStorage.setItem("diaryPassword", newPass);
+    diaryPassword = newPass;
+  } else {
+    alert("パスワードが設定されていません。再読み込みして設定してください。");
+  }
+}
+
 // 日記データを localStorage から読み込む
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
@@ -21,11 +34,18 @@ function renderDiaries() {
   });
 }
 
-// 日記削除
+// 日記削除（パスワード必須）
 function deleteDiary(index) {
-  diaries.splice(index, 1);
-  localStorage.setItem("diaries", JSON.stringify(diaries));
-  renderDiaries();
+  const input = prompt("パスワードを入力してください");
+
+  if (input === diaryPassword) {
+    diaries.splice(index, 1);
+    localStorage.setItem("diaries", JSON.stringify(diaries));
+    renderDiaries();
+    alert("削除しました");
+  } else {
+    alert("パスワードが違います");
+  }
 }
 
 // ボタンで入力欄の表示切り替え
