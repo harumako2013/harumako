@@ -1,8 +1,24 @@
 // -------------------------
-// バージョン番号（ここを更新のたびに上げる）
+// バージョン番号
 // -------------------------
-const version = "0.1";  // ← プログラム更新したらここを 0.2 → 0.3 → 0.4 と上げる
+const version = "0.1"; 
 document.getElementById("versionDisplay").textContent = "Version: " + version;
+
+
+// -------------------------
+// ページ切り替え
+// -------------------------
+document.querySelectorAll(".navBtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.dataset.target;
+
+    document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+    document.getElementById(target).classList.remove("hidden");
+  });
+});
+
+// 初期表示はプロフィール
+document.getElementById("profilePage").classList.remove("hidden");
 
 
 // -------------------------
@@ -86,7 +102,6 @@ document.getElementById("saveBtn").addEventListener("click", () => {
 
   const date = new Date().toLocaleString();
 
-  // 画像をBase64に変換
   if (imageInput.files.length > 0) {
     const reader = new FileReader();
     reader.onload = () => {
