@@ -1,4 +1,6 @@
-// パスワードを localStorage に保存（初回のみ）
+// -------------------------
+// パスワード設定（初回のみ）
+// -------------------------
 let diaryPassword = localStorage.getItem("diaryPassword");
 
 if (!diaryPassword) {
@@ -11,10 +13,14 @@ if (!diaryPassword) {
   }
 }
 
-// 日記データを localStorage から読み込む
+// -------------------------
+// 日記データ読み込み
+// -------------------------
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
-// 日記一覧を表示
+// -------------------------
+// 日記一覧表示
+// -------------------------
 function renderDiaries() {
   const diaryList = document.getElementById("diaryList");
   diaryList.innerHTML = "";
@@ -34,7 +40,9 @@ function renderDiaries() {
   });
 }
 
+// -------------------------
 // 日記削除（パスワード必須）
+// -------------------------
 function deleteDiary(index) {
   const input = prompt("パスワードを入力してください");
 
@@ -48,12 +56,16 @@ function deleteDiary(index) {
   }
 }
 
-// ボタンで入力欄の表示切り替え
+// -------------------------
+// 入力欄の表示切り替え
+// -------------------------
 document.getElementById("writeBtn").addEventListener("click", () => {
   document.getElementById("inputArea").classList.toggle("hidden");
 });
 
+// -------------------------
 // 保存ボタン
+// -------------------------
 document.getElementById("saveBtn").addEventListener("click", () => {
   const text = document.getElementById("diaryText").value;
   const imageInput = document.getElementById("imageInput");
@@ -74,7 +86,9 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   }
 });
 
+// -------------------------
 // 日記保存処理
+// -------------------------
 function saveDiary(text, date, image) {
   diaries.push({ text, date, image });
   localStorage.setItem("diaries", JSON.stringify(diaries));
@@ -86,5 +100,7 @@ function saveDiary(text, date, image) {
   renderDiaries();
 }
 
+// -------------------------
 // 初期表示
+// -------------------------
 renderDiaries();
