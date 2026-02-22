@@ -1,12 +1,12 @@
 // -------------------------
 // バージョン番号
 // -------------------------
-const version = "0.2"; 
+const version = "0.1";
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
 // -------------------------
-// ページ切り替え
+// ページ切り替え（通常ページ）
 // -------------------------
 document.querySelectorAll(".navBtn").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -27,7 +27,7 @@ document.getElementById("profilePage").classList.remove("hidden");
 let diaryPassword = localStorage.getItem("diaryPassword");
 
 if (!diaryPassword) {
-  const newPass = prompt("日記のパスワードを設定してください");
+  const newPass = prompt("日記・管理者用のパスワードを設定してください");
   if (newPass && newPass.trim() !== "") {
     localStorage.setItem("diaryPassword", newPass);
     diaryPassword = newPass;
@@ -35,6 +35,21 @@ if (!diaryPassword) {
     alert("パスワードが設定されていません。再読み込みして設定してください。");
   }
 }
+
+
+// -------------------------
+// 管理者ページのパスワードチェック
+// -------------------------
+document.getElementById("adminBtn").addEventListener("click", () => {
+  const input = prompt("管理者パスワードを入力してください");
+
+  if (input === diaryPassword) {
+    document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+    document.getElementById("adminPage").classList.remove("hidden");
+  } else {
+    alert("パスワードが違います");
+  }
+});
 
 
 // -------------------------
