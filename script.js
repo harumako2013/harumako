@@ -1,12 +1,12 @@
 // -------------------------
 // バージョン番号
 // -------------------------
-const version = "0.3";
+const version = "0.2";
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
 // -------------------------
-// ページ切り替え（通常ページ）
+// ページ切り替え
 // -------------------------
 document.querySelectorAll(".navBtn").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -17,22 +17,21 @@ document.querySelectorAll(".navBtn").forEach(btn => {
   });
 });
 
-// 初期表示はプロフィール
 document.getElementById("profilePage").classList.remove("hidden");
 
 
 // -------------------------
-// パスワード設定（初回のみ）
+// パスワード設定
 // -------------------------
-let diaryPassword = localStorage.getItem("diaryPassword");
+let adminPass = localStorage.getItem("adminPass");
 
-if (!diaryPassword) {
-  const newPass = prompt("日記・管理者用のパスワードを設定してください");
+if (!adminPass) {
+  const newPass = prompt("管理者パスワードを設定してください");
   if (newPass && newPass.trim() !== "") {
-    localStorage.setItem("diaryPassword", newPass);
-    diaryPassword = newPass;
+    localStorage.setItem("adminPass", newPass);
+    adminPass = newPass;
   } else {
-    alert("パスワードが設定されていません。再読み込みして設定してください。");
+    alert("パスワードが設定されていません。再読み込みしてください。");
   }
 }
 
@@ -43,7 +42,7 @@ if (!diaryPassword) {
 document.getElementById("adminBtn").addEventListener("click", () => {
   const input = prompt("管理者パスワードを入力してください");
 
-  if (input === diaryPassword) {
+  if (input === adminPass) {
     document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
     document.getElementById("adminPage").classList.remove("hidden");
   } else {
@@ -53,14 +52,24 @@ document.getElementById("adminBtn").addEventListener("click", () => {
 
 
 // -------------------------
-// 日記データ読み込み
+// プロフィール保存
+// -------------------------
+let profile = localStorage.getItem("profile") || "まだプロフィールがありません。";
+document.getElementById("profileText").textContent = profile;
+
+document.getElementById("saveProfileBtn").addEventListener("click", () => {
+  const text = document.getElementById("profileEdit").value;
+  localStorage.setItem("profile", text);
+  document.getElementById("profileText").textContent = text;
+  alert("プロフィールを保存しました");
+});
+
+
+// -------------------------
+// 日記データ
 // -------------------------
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
-
-// -------------------------
-// 日記一覧表示
-// -------------------------
 function renderDiaries() {
   const diaryList = document.getElementById("diaryList");
   diaryList.innerHTML = "";
@@ -73,7 +82,6 @@ function renderDiaries() {
       <div class="diary-date">${diary.date}</div>
       <div>${diary.text}</div>
       ${diary.image ? `<img src="${diary.image}" class="diary-image">` : ""}
-      <button class="deleteBtn" onclick="deleteDiary(${index})">削除</button>
     `;
 
     diaryList.prepend(item);
@@ -82,34 +90,9 @@ function renderDiaries() {
 
 
 // -------------------------
-// 日記削除（パスワード必須）
+// 日記保存（管理者のみ）
 // -------------------------
-function deleteDiary(index) {
-  const input = prompt("パスワードを入力してください");
-
-  if (input === diaryPassword) {
-    diaries.splice(index, 1);
-    localStorage.setItem("diaries", JSON.stringify(diaries));
-    renderDiaries();
-    alert("削除しました");
-  } else {
-    alert("パスワードが違います");
-  }
-}
-
-
-// -------------------------
-// 入力欄の表示切り替え
-// -------------------------
-document.getElementById("writeBtn").addEventListener("click", () => {
-  document.getElementById("inputArea").classList.toggle("hidden");
-});
-
-
-// -------------------------
-// 保存ボタン
-// -------------------------
-document.getElementById("saveBtn").addEventListener("click", () => {
+document.getElementById("saveDiaryBtn").addEventListener("click", () => {
   const text = document.getElementById("diaryText").value;
   const imageInput = document.getElementById("imageInput");
 
@@ -128,19 +111,60 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   }
 });
 
-
-// -------------------------
-// 日記保存処理
-// -------------------------
 function saveDiary(text, date, image) {
   diaries.push({ text, date, image });
   localStorage.setItem("diaries", JSON.stringify(diaries));
 
   document.getElementById("diaryText").value = "";
   document.getElementById("imageInput").value = "";
-  document.getElementById("inputArea").classList.add("hidden");
 
   renderDiaries();
+  alert("日記を保存しました");
+}
+
+
+// -------------------------
+// 投稿場（掲示板）
+// -------------------------
+let posts = JSON.parse(localStorage.getItem("posts") || "[]");
+
+function renderPosts() {
+  const postList = document.getElementById("postList");
+  postList.innerHTML = "";
+
+  posts.forEach((post, index) => {
+    const item = document.createElement("div");
+    item.className = "diary-item";
+
+    item.innerHTML = `
+      <div>${post.text}</div>
+      <button onclick="deletePost(${index})">削除</button>
+    `;
+
+    postList.prepend(item);
+  });
+}
+
+document.getElementById("postBtn").addEventListener("click", () => {
+  const text = document.getElementById("postInput").value;
+  if (text.trim() === "") return;
+
+  posts.push({ text });
+  localStorage.setItem("posts", JSON.stringify(posts));
+
+  document.getElementById("postInput").value = "";
+  renderPosts();
+});
+
+function deletePost(index) {
+  const input = prompt("管理者パスワードを入力してください");
+  if (input === adminPass) {
+    posts.splice(index, 1);
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts();
+  } else {
+    alert("パスワードが違います");
+  }
 }
 
 
@@ -148,3 +172,4 @@ function saveDiary(text, date, image) {
 // 初期表示
 // -------------------------
 renderDiaries();
+renderPosts();
