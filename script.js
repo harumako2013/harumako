@@ -1,7 +1,7 @@
 // -------------------------
 // バージョン番号
 // -------------------------
-const version = "1.2";
+const version = "1.3";
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
