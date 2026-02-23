@@ -62,7 +62,7 @@ textarea {
 }
 
 button {
-  padding: 50px 15px;
+  padding: 8px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -75,4 +75,9 @@ button {
 
 .deleteBtn:hover {
   background: #c0392b;
+}
+
+.specialBtn {
+  background: #ff9800; /* オレンジ色 */
+  color: white;
 }
