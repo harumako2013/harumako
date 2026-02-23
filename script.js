@@ -1,7 +1,7 @@
 // -------------------------
 // バージョン番号
 // -------------------------
-const version = "1.0";
+const version = "1.1";
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
@@ -48,6 +48,42 @@ document.getElementById("adminBtn").addEventListener("click", () => {
   } else {
     alert("パスワードが違います");
   }
+});
+
+
+// -------------------------
+// 投稿者ID（初回のみ発行）
+// -------------------------
+let userId = localStorage.getItem("userId");
+
+if (!userId) {
+  const randomNum = Math.floor(Math.random() * 900) + 100;
+  userId = "User" + randomNum;
+  localStorage.setItem("userId", userId);
+}
+
+// ID表示
+document.getElementById("userIdDisplay").textContent = userId;
+
+
+// -------------------------
+// ID変更機能
+// -------------------------
+document.getElementById("changeIdBtn").addEventListener("click", () => {
+  const newId = document.getElementById("userIdInput").value.trim();
+
+  if (newId === "") {
+    alert("IDを入力してください");
+    return;
+  }
+
+  userId = newId;
+  localStorage.setItem("userId", userId);
+
+  document.getElementById("userIdDisplay").textContent = userId;
+  document.getElementById("userIdInput").value = "";
+
+  alert("IDを変更しました");
 });
 
 
@@ -144,7 +180,7 @@ function renderPosts() {
     item.className = "diary-item";
 
     item.innerHTML = `
-      <div>${post.text}</div>
+      <div><strong>${post.id}</strong>: ${post.text}</div>
       <button class="deleteBtn" onclick="deletePost(${index})">削除</button>
     `;
 
@@ -156,7 +192,7 @@ document.getElementById("postBtn").addEventListener("click", () => {
   const text = document.getElementById("postInput").value;
   if (text.trim() === "") return;
 
-  posts.push({ text });
+  posts.push({ id: userId, text });
   localStorage.setItem("posts", JSON.stringify(posts));
 
   document.getElementById("postInput").value = "";
