@@ -17,6 +17,7 @@
     <button class="navBtn" data-target="postPage">投稿場</button>
     <button id="adminBtn">管理者ページ</button>
     <button id="kariBtn" class="navBtn specialBtn" data-target="kariPage">かり</button>
+    <button class="navBtn" data-target="inputPage">入力ページ</button>
   </nav>
 
   <!-- プロフィールページ -->
@@ -68,7 +69,14 @@
   <div id="kariPage" class="page hidden">
   　<h2>ソ連万歳日帝万歳</h2>
   </div>
-  
+  <div id="inputPage" class="page hidden">
+  <h2>入力ページ</h2>
+
+  <input id="textInput" placeholder="ここに入力してね">
+  <button id="sendBtn">送信</button>
+
+  <p id="resultArea"></p>
+</div>
 
   <script src="script.js"></script>
 </body>
