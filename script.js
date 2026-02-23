@@ -1,7 +1,7 @@
 // -------------------------
 // バージョン番号
 // -------------------------
-const version = "0.2";
+const version = "1.0";
 document.getElementById("versionDisplay").textContent = "Version: " + version;
 
 
@@ -21,7 +21,7 @@ document.getElementById("profilePage").classList.remove("hidden");
 
 
 // -------------------------
-// パスワード設定
+// 管理者パスワード
 // -------------------------
 let adminPass = localStorage.getItem("adminPass");
 
@@ -52,7 +52,7 @@ document.getElementById("adminBtn").addEventListener("click", () => {
 
 
 // -------------------------
-// プロフィール保存
+// プロフィール
 // -------------------------
 let profile = localStorage.getItem("profile") || "まだプロフィールがありません。";
 document.getElementById("profileText").textContent = profile;
@@ -66,7 +66,7 @@ document.getElementById("saveProfileBtn").addEventListener("click", () => {
 
 
 // -------------------------
-// 日記データ
+// 日記
 // -------------------------
 let diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
@@ -82,16 +82,24 @@ function renderDiaries() {
       <div class="diary-date">${diary.date}</div>
       <div>${diary.text}</div>
       ${diary.image ? `<img src="${diary.image}" class="diary-image">` : ""}
+      <button class="deleteBtn" onclick="deleteDiary(${index})">削除</button>
     `;
 
     diaryList.prepend(item);
   });
 }
 
+function deleteDiary(index) {
+  const input = prompt("管理者パスワードを入力してください");
+  if (input === adminPass) {
+    diaries.splice(index, 1);
+    localStorage.setItem("diaries", JSON.stringify(diaries));
+    renderDiaries();
+  } else {
+    alert("パスワードが違います");
+  }
+}
 
-// -------------------------
-// 日記保存（管理者のみ）
-// -------------------------
 document.getElementById("saveDiaryBtn").addEventListener("click", () => {
   const text = document.getElementById("diaryText").value;
   const imageInput = document.getElementById("imageInput");
@@ -119,12 +127,11 @@ function saveDiary(text, date, image) {
   document.getElementById("imageInput").value = "";
 
   renderDiaries();
-  alert("日記を保存しました");
 }
 
 
 // -------------------------
-// 投稿場（掲示板）
+// 掲示板（投稿場）
 // -------------------------
 let posts = JSON.parse(localStorage.getItem("posts") || "[]");
 
@@ -138,7 +145,7 @@ function renderPosts() {
 
     item.innerHTML = `
       <div>${post.text}</div>
-      <button onclick="deletePost(${index})">削除</button>
+      <button class="deleteBtn" onclick="deletePost(${index})">削除</button>
     `;
 
     postList.prepend(item);
