@@ -77,9 +77,8 @@ button {
   background: #c0392b;
 }
 
-.specialBtn {
-  background: #92b5a9; /* オレンジ色 */
-  color: white;
+#kariBtn {
+  color: #92b5a9;
 }
 
 #kariBtn {
